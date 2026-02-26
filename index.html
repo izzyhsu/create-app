@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create New App</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f6f8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 16px 80px;
+      color: #1a1d23;
+    }
+
+    .page-wrapper {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .page-header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1d23;
+      margin-bottom: 4px;
+    }
+
+    .page-header p {
+      font-size: 13.5px;
+      color: #6b7280;
+    }
+
+    /* Card / Section */
+    .section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .section-title svg {
+      color: #6b7280;
+      flex-shrink: 0;
+    }
+
+    /* Form fields */
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13.5px;
+      color: #1a1d23;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #6d28d9;
+      box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
+    }
+
+    input[type="text"]::placeholder,
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .field + .field {
+      margin-top: 14px;
+    }
+
+    /* Option cards (Client Interface & Database) */
+    .option-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-grid.cols-3 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .option-grid.cols-3 .option-card:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .option-grid.cols-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .option-card {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+      user-select: none;
+    }
+
+    .option-card:hover {
+      border-color: #a78bfa;
+      background: #faf5ff;
+    }
+
+    .option-card.selected {
+      border-color: #7c3aed;
+      background: #faf5ff;
+    }
+
+    .option-card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .option-card-icon.blue { background: #dbeafe; color: #2563eb; }
+    .option-card-icon.purple { background: #ede9fe; color: #7c3aed; }
+    .option-card-icon.gray { background: #f3f4f6; color: #6b7280; }
+
+    .option-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1d23;
+      margin-bottom: 4px;
+    }
+
+    .option-card-desc {
+      font-size: 11.5px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .option-card .badge-row {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .badge.green { background: #d1fae5; color: #065f46; }
+    .badge.blue { background: #dbeafe; color: #1d4ed8; }
+
+    /* Backend Stack - Language tabs */
+    .stack-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .stack-group {
+      flex: 1;
+    }
+
+    .stack-group-label {
+      font-size: 11.5px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .lang-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lang-tab {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+
+    .lang-tab:hover { border-color: #a78bfa; color: #6d28d9; }
+
+    .lang-tab.active {
+      border-color: #7c3aed;
+      background: #faf5ff;
+      color: #6d28d9;
+    }
+
+    .framework-display {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      color: #374151;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f9fafb;
+    }
+
+    .framework-display .auto-badge {
+      font-size: 10px;
+      font-weight: 600;
+      background: #e0e7ff;
+      color: #4338ca;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: auto;
+    }
+
+    /* Core Capabilities grid */
+    .capability-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .capability-card {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+      user-select: none;
+    }
+
+    .capability-card:hover {
+      border-color: #a78bfa;
+      background: #faf5ff;
+    }
+
+    .capability-card.selected {
+      border-color: #7c3aed;
+      background: #faf5ff;
+    }
+
+    .capability-card .cap-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+
+    .cap-icon.green { background: #d1fae5; }
+    .cap-icon.orange { background: #ffedd5; }
+    .cap-icon.blue { background: #dbeafe; }
+    .cap-icon.red { background: #fee2e2; }
+    .cap-icon.purple { background: #ede9fe; }
+
+    .cap-check {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 50%;
+      background: #fff;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .capability-card.selected .cap-check {
+      background: #7c3aed;
+      border-color: #7c3aed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .capability-card.selected .cap-check::after {
+      content: "";
+      display: block;
+      width: 5px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    .cap-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1d23;
+      margin-bottom: 3px;
+    }
+
+    .cap-desc {
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
+    /* Operational Config */
+    .op-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .op-col-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .op-hint {
+      font-size: 11.5px;
+      color: #9ca3af;
+      margin-top: 6px;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px;
+      cursor: pointer;
+    }
+
+    /* Checkboxes */
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #374151;
+      user-select: none;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #7c3aed;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Footer actions */
+    .footer-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-cancel {
+      background: #fff;
+      border: 1.5px solid #d1d5db;
+      color: #374151;
+    }
+
+    .btn-cancel:hover { background: #f9fafb; }
+
+    .btn-primary {
+      background: #7c3aed;
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #6d28d9; }
+
+    /* Section divider */
+    .section-subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: -10px;
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <div class="page-header">
+      <h1>Create New App</h1>
+      <p>Configure your new application with standard defaults.</p>
+    </div>
+
+    <!-- App Identity -->
+    <div class="section">
+      <div class="section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        App Identity
+      </div>
+      <div class="field">
+        <label for="app-name">App Name</label>
+        <input type="text" id="app-name" placeholder="e.g., payment-app" />
+      </div>
+      <div class="field">
+        <label for="app-desc">Description</label>
+        <textarea id="app-desc" placeholder="What does this app do?"></textarea>
+      </div>
+    </div>
+
+    <!-- Client Interface -->
+    <div class="section">
+      <div class="section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Client Interface
+      </div>
+      <div class="option-grid cols-3" id="client-interface">
+        <div class="option-card selected" data-value="web" onclick="selectOption('client-interface', this)">
+          <div class="option-card-icon blue">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+          </div>
+          <div class="option-card-title">Web App</div>
+          <div class="option-card-desc">React + TypeScript frontend optimized for desktop and mobile browsers.</div>
+        </div>
+        <div class="option-card" data-value="mobile" onclick="selectOption('client-interface', this)">
+          <div class="option-card-icon purple">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg>
+          </div>
+          <div class="option-card-title">Mobile App</div>
+          <div class="option-card-desc">Native iOS (Swift) or Android (Kotlin) application.</div>
+        </div>
+        <div class="option-card" data-value="backend" onclick="selectOption('client-interface', this)">
+          <div class="option-card-icon gray">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg>
+          </div>
+          <div class="option-card-title">Backend Service Only</div>
+          <div class="option-card-desc">Headless API service without a frontend interface.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backend Stack -->
+    <div class="section">
+      <div class="section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Backend Stack
+      </div>
+      <div class="stack-row">
+        <div class="stack-group">
+          <div class="stack-group-label">Language</div>
+          <div class="lang-tabs" id="lang-tabs">
+            <button class="lang-tab active" onclick="selectLang(this)">Go</button>
+            <button class="lang-tab" onclick="selectLang(this)">Java</button>
+            <button class="lang-tab" onclick="selectLang(this)">Python</button>
+          </div>
+        </div>
+        <div class="stack-group">
+          <div class="stack-group-label">Framework</div>
+          <div class="framework-display">
+            <span id="framework-name">Menzo</span>
+            <span class="auto-badge">Auto-selected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Database -->
+    <div class="section">
+      <div class="section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+        Database
+      </div>
+      <div class="option-grid cols-2" id="database">
+        <div class="option-card selected" data-value="cloudsql" onclick="selectOption('database', this)">
+          <div class="badge-row">
+            <span class="badge green">RECOMMENDED</span>
+            <span class="badge blue">COST-EFFICIENT</span>
+          </div>
+          <div class="option-card-icon blue">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </div>
+          <div class="option-card-title">Cloud SQL</div>
+          <div class="option-card-desc">Fully managed relational database service for MySQL, PostgreSQL, and SQL Server.</div>
+        </div>
+        <div class="option-card" data-value="spanner" onclick="selectOption('database', this)">
+          <div class="option-card-icon purple">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          </div>
+          <div class="option-card-title">Spanner</div>
+          <div class="option-card-desc">Fully managed, mission-critical, relational database service with global scale.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core Capabilities -->
+    <div class="section">
+      <div class="section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Core Capabilities
+      </div>
+      <div class="section-subtitle">Leverage common internal services to accelerate your development.</div>
+      <div class="capability-grid">
+        <div class="capability-card" onclick="toggleCapability(this)">
+          <div class="cap-check"></div>
+          <div class="cap-icon green">💳</div>
+          <div class="cap-title">Payments</div>
+          <div class="cap-desc">Unified payment gateway binding with PCI compliance handling.</div>
+        </div>
+        <div class="capability-card" onclick="toggleCapability(this)">
+          <div class="cap-check"></div>
+          <div class="cap-icon orange">🔔</div>
+          <div class="cap-title">Notifications</div>
+          <div class="cap-desc">Centralized push, email, and SMS delivery service.</div>
+        </div>
+        <div class="capability-card" onclick="toggleCapability(this)">
+          <div class="cap-check"></div>
+          <div class="cap-icon blue">🌐</div>
+          <div class="cap-title">i18n</div>
+          <div class="cap-desc">Localization libraries and translation management sync.</div>
+        </div>
+        <div class="capability-card" onclick="toggleCapability(this)">
+          <div class="cap-check"></div>
+          <div class="cap-icon red">▶️</div>
+          <div class="cap-title">Media Streaming</div>
+          <div class="cap-desc">High-performance media delivery (media-p).</div>
+        </div>
+        <div class="capability-card" onclick="toggleCapability(this)">
+          <div class="cap-check"></div>
+          <div class="cap-icon purple">🔑</div>
+          <div class="cap-title">Identity (IdP)</div>
+          <div class="cap-desc">Unified authentication and identity management.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operational Config -->
+    <div class="section">
+      <div class="section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 8v4l3 3"/></svg>
+        Operational Config
+      </div>
+      <div class="op-grid">
+        <div>
+          <div class="op-col-label">Readiness Level (ARL)</div>
+          <select id="arl-select">
+            <option value="a">Level A</option>
+            <option value="b">Level B</option>
+            <option value="c">Level C</option>
+          </select>
+          <div class="op-hint">Determines the SLO targets and on-call expectations.</div>
+        </div>
+        <div>
+          <div class="op-col-label">Infrastructure Add-ons</div>
+          <label class="checkbox-item">
+            <input type="checkbox" checked /> Enable Auto-Scaling
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" /> Enable PagerDuty
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" /> Provision Redis Cache
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-actions">
+      <button class="btn btn-cancel" onclick="handleCancel()">Cancel</button>
+      <button class="btn btn-primary" onclick="handleCreate()">Create App</button>
+    </div>
+
+  </div>
+
+  <script>
+    function selectOption(groupId, card) {
+      const group = document.getElementById(groupId);
+      group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    }
+
+    function selectLang(tab) {
+      document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const frameworks = { Go: 'Menzo', Java: 'Spring Boot', Python: 'FastAPI' };
+      document.getElementById('framework-name').textContent = frameworks[tab.textContent] || 'Auto-selected';
+    }
+
+    function toggleCapability(card) {
+      card.classList.toggle('selected');
+    }
+
+    function handleCancel() {
+      if (confirm('Discard changes and go back?')) {
+        history.back();
+      }
+    }
+
+    function handleCreate() {
+      const appName = document.getElementById('app-name').value.trim();
+      if (!appName) {
+        document.getElementById('app-name').focus();
+        document.getElementById('app-name').style.borderColor = '#ef4444';
+        document.getElementById('app-name').style.boxShadow = '0 0 0 3px rgba(239,68,68,0.12)';
+        return;
+      }
+      alert(`App "${appName}" created successfully!`);
+    }
+
+    document.getElementById('app-name').addEventListener('input', function () {
+      this.style.borderColor = '';
+      this.style.boxShadow = '';
+    });
+  </script>
+</body>
+</html>

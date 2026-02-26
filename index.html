@@ -14,13 +14,13 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 40px 16px 80px;
+      padding: 48px 40px 80px;
       color: #1a1d23;
     }
 
     .page-wrapper {
       width: 100%;
-      max-width: 560px;
+      max-width: 860px;
     }
 
     .page-header {
@@ -28,14 +28,14 @@
     }
 
     .page-header h1 {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 700;
       color: #1a1d23;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .page-header p {
-      font-size: 13.5px;
+      font-size: 14px;
       color: #6b7280;
     }
 
@@ -44,7 +44,7 @@
       background: #fff;
       border: 1px solid #e5e7eb;
       border-radius: 12px;
-      padding: 20px 22px;
+      padding: 24px 28px;
       margin-bottom: 16px;
     }
 
@@ -52,10 +52,10 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 600;
       color: #374151;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       letter-spacing: 0.01em;
     }
 
@@ -79,8 +79,8 @@
       width: 100%;
       border: 1px solid #d1d5db;
       border-radius: 8px;
-      padding: 9px 12px;
-      font-size: 13.5px;
+      padding: 10px 14px;
+      font-size: 14px;
       color: #1a1d23;
       background: #fff;
       outline: none;
@@ -116,11 +116,7 @@
     }
 
     .option-grid.cols-3 {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .option-grid.cols-3 .option-card:last-child {
-      grid-column: 1 / -1;
+      grid-template-columns: 1fr 1fr 1fr;
     }
 
     .option-grid.cols-2 {
@@ -259,7 +255,7 @@
     /* Core Capabilities grid */
     .capability-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(5, 1fr);
       gap: 10px;
     }
 
@@ -510,7 +506,7 @@
         <div class="stack-group">
           <div class="stack-group-label">Framework</div>
           <div class="framework-display">
-            <span id="framework-name">Menzo</span>
+            <span id="framework-name">Monzo</span>
             <span class="auto-badge">Auto-selected</span>
           </div>
         </div>
@@ -635,7 +631,7 @@
     function selectLang(tab) {
       document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      const frameworks = { Go: 'Menzo', Java: 'Spring Boot', Python: 'FastAPI' };
+      const frameworks = { Go: 'Monzo', Java: 'Spring Boot', Python: 'FastAPI' };
       document.getElementById('framework-name').textContent = frameworks[tab.textContent] || 'Auto-selected';
     }
 
